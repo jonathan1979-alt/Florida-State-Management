@@ -16,10 +16,20 @@ from zoneinfo import ZoneInfo
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
+OWNER_ID = 1440502528067244032  # your ID
+
+@bot.tree.interaction_check
+async def global_check(interaction: discord.Interaction) -> bool:
+    if interaction.user.id != OWNER_ID:
+        await interaction.response.send_message(
+            "You can't use this bot.",
+            ephemeral=True
+        )
+        return False
+    return True
 EST = ZoneInfo("America/New_York")
 
 SECRET_CODE = "8464291234052"
-OWNER_ID = 1440502528067244032  # REPLACE WITH YOUR DISCORD ID
 
 bot_locked = False
 
